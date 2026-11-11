@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mirkis deco — cestería nórdica</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  
+  <!-- Mercado Pago SDK -->
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+  
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Encabezado / Navbar con Logo Centrado -->
+  <header class="navbar">
+    <nav class="nav-links nav-left">
+      <a href="#catalogo">Colección</a>
+    </nav>
+
+    <a href="#" class="logo-container">
+      <img src="assets/img/logo.png" alt="MIRKIS DECO" class="logo-img">
+    </a>
+
+    <div class="nav-right">
+      <button class="cart-btn" id="cartToggleBtn" aria-label="Ver carrito">
+        Carrito (<span id="cartCount">0</span>)
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>cestería nórdica</h1>
+      <p>Piezas tejidas a mano para habitar espacios en calma.</p>
+      <a href="#catalogo" class="btn-primary">Explorar Colección</a>
+    </div>
+  </section>
+
+  <!-- Catálogo con Filtros Centrados -->
+  <main class="catalog-container" id="catalogo">
+    <div class="catalog-header">
+      <h2>Catálogo</h2>
+      <div class="categories-filter" id="categoriesFilter">
+        <button class="filter-btn active" data-cat="todos">Todos</button>
+        <button class="filter-btn" data-cat="algodon">Plato de sitio</button>
+        <button class="filter-btn" data-cat="yute">Posa vaso</button>
+        <button class="filter-btn" data-cat="vivero">Cesto</button>
+        <button class="filter-btn" data-cat="mantas">Porta Difusor & Flores</button>
+      </div>
+    </div>
+
+    <div class="products-grid" id="productsGrid"></div>
+  </main>
+
+  <!-- Side-Drawer del Carrito con Calculadora de Envío Integrada -->
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="drawer-header">
+      <h3>Tu Carrito</h3>
+      <button class="close-btn" id="closeCartBtn">&times;</button>
+    </div>
+    
+    <div class="drawer-body" id="cartItemsContainer"></div>
+
+    <div class="drawer-footer">
+      <!-- Calculadora dentro del carrito -->
+      <div class="cart-shipping-box">
+        <label for="postalCode">Calcular envío (Correo Argentino):</label>
+        <form id="shippingForm" class="shipping-form-cart">
+          <input type="text" id="postalCode" placeholder="Código Postal" maxlength="8" required>
+          <button type="submit" class="btn-secondary btn-sm">Calcular</button>
+        </form>
+        <div id="shippingResult" class="shipping-result"></div>
+      </div>
+
+      <div class="cart-summary">
+        <div class="cart-row">
+          <span>Subtotal:</span>
+          <span id="cartSubtotalAmount">$0</span>
+        </div>
+        <div class="cart-row" id="shippingRow" style="display: none;">
+          <span>Envío:</span>
+          <span id="cartShippingAmount">$0</span>
+        </div>
+        <div class="cart-row total-row">
+          <span>Total:</span>
+          <strong id="cartTotalAmount">$0</strong>
+        </div>
+      </div>
+
+      <button class="btn-primary btn-full" id="checkoutBtn">Iniciar Compra</button>
+    </div>
+  </aside>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Modal Checkout Mercado Pago -->
+  <div class="modal" id="checkoutModal">
+    <div class="modal-content">
+      <button class="close-modal" id="closeModalBtn">&times;</button>
+      <h3>Finalizar Compra</h3>
+      <form id="checkoutForm">
+        <div class="form-group">
+          <label for="customerName">Nombre completo</label>
+          <input type="text" id="customerName" required placeholder="Ej: Viki Guarachi">
+        </div>
+        <div class="form-group">
+          <label for="customerEmail">Email</label>
+          <input type="email" id="customerEmail" required placeholder="ejemplo@correo.com">
+        </div>
+        <div class="form-group">
+          <label for="customerAddress">Dirección de entrega</label>
+          <input type="text" id="customerAddress" required placeholder="Calle, número, localidad">
+        </div>
+        
+        <button type="submit" class="btn-primary btn-full" id="mpPayBtn" style="margin-top: 1rem;">Pagar con Mercado Pago</button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2026 mirkis deco. Hecho con calma y dedicación.</p>
+  </footer>
+
+  <script src="js/firebase-config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

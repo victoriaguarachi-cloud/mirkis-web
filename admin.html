@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — mirkis deco</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-c.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">mirkis deco <span class="admin-tag">Admin</span></div>
+    <a href="index.html" class="btn-secondary">Ver Tienda</a>
+  </header>
+
+  <main class="admin-container">
+    
+    <!-- Formulario para Agregar/Editar Producto -->
+    <section class="admin-card">
+      <h2 id="formTitle">Cargar Nuevo Producto</h2>
+      <form id="productForm">
+        <input type="hidden" id="productId">
+        
+        <div class="form-group">
+          <label for="pName">Nombre del Producto</label>
+          <input type="text" id="pName" placeholder="Ej: Cesta Nord de Algodón" required>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="pCategory">Categoría</label>
+            <select id="pCategory" required>
+              <option value="algodon">Algodón</option>
+              <option value="yute">Yute</option>
+              <option value="vivero">Vivero</option>
+              <option value="mantas">Mantas & Hilos</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="pPrice">Precio ($)</label>
+            <input type="number" id="pPrice" placeholder="18500" required min="0">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="pImg">URL de la Imagen / Ruta</label>
+          <input type="text" id="pImg" placeholder="assets/img/cesta-algodon.jpg" required>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary" id="saveBtn">Guardar Producto</button>
+          <button type="button" class="btn-secondary" id="cancelBtn" style="display:none;">Cancelar</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Lista de Productos en Base de Datos -->
+    <section class="admin-card">
+      <h2>Catálogo Actual</h2>
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Precio</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="adminProductsList">
+            <!-- Cargado dinámicamente desde Firestore -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="js/firebase_config.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
